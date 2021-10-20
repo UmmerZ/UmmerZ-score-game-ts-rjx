@@ -1,26 +1,47 @@
 import { TextField, Button } from "@material-ui/core"
 import { useStyles } from "./style"
 import React from "react"
-import { rawUsers$ } from "../store"
+import { BehaviorSubject, map } from "rxjs"
 
-export const UserList = () => {
-  const defaultUser: IUser = {
+export const Board= () => {
+  const defaultUsers: IUser[] = [{
     _id: "2584566",
     username: "Loki",
     score: 170,
-  }
+    }, {
+      _id:"58658",
+      username: "Thor",
+      score: 155
+    }]
   let numbers = [0, 0, 0, 0, 0, 0, 0, 0, 0]
-  const [users, setUsers] = React.useState<IUser[]>([defaultUser])
+  const [users, setUsers] = React.useState<IUser[]>(defaultUsers)
   const [currentUser, setCurrentUser] = React.useState<IUser | undefined>()
   const [newUser, setNewUser] = React.useState<IUser | undefined>()
   const [clicked, setClicked] = React.useState(false)
   const [value, setValue] = React.useState<number[]>(numbers)
+  const [winner, setWinner] = React.useState<IUser[] | undefined>()
   const [disabled, setDisabled] = React.useState<number[]>([])
   const buttons = ["X", "X", "X", "X", "X", "X", "X", "X", "X"]
 
-  // React.useEffect(() => {
-  //   rawUsers$.subscribe(setUsers)
-  // }, [])
+  const gameUsers$ = new BehaviorSubject<IUser[]>([])
+
+  gameUsers$.next(users)
+
+
+  React.useEffect(() => {
+    userWithHighestScore$.subscribe(setWinner)
+  }, [])
+
+  const highestScore = () => {
+    const win  =  users.map(x => x.score )
+    return  Math.max(...win)
+  }
+
+  const userWithHighestScore$ = gameUsers$.pipe(
+    map(user => user?.filter(x =>  x.score === highestScore()).map(x => x)
+  ))
+ 
+
   const classes = useStyles()
   const set = (arr: Array<number>, index: number, val: number, pos: number) => {
     if (index < arr.length) {
@@ -40,8 +61,9 @@ export const UserList = () => {
     e.preventDefault()
     setCurrentUser(newUser)
   }
+  const prevScore = winner?.map(x => x.score)
   const gameHasEnded = countOccurrences(value, 9, 0) < 7
-  console.log(users.length)
+  console.log(winner)
   return (
     <div className={classes.root}>
       <div className={classes.total}>
@@ -64,6 +86,7 @@ export const UserList = () => {
                 setNewUser({
                   _id: Math.floor(Math.random() * 150 + 10).toString(),
                   username: e.target.value,
+                  score: 0
                 })
               }
             />
@@ -100,6 +123,15 @@ export const UserList = () => {
           {clicked ? value[index] : button}
         </Button>
       ))}
-    </div>
+      {gameHasEnded ?
+       
+       
+       <div className= {classes.welcome}>
+            {prevScore && value.reduce((a: number, b: number) => a + b, 0) >   prevScore[0] ?
+          `You are the Winner` : 
+          `Oops! Winner is ${winner?.map(x => x.username)}`}</div>
+          : null }
+    </div> 
+ 
   )
 }

@@ -1,22 +1,22 @@
 [
   {
-    "_id": 3,
+    "_id": "3",
     "username": "bobby",
-    "email": "bobby@gmail.com"
+    "score": 5
   },
   {
-    "_id": 4,
+    "_id": "4",
     "username": "falon",
-    "email": "falon@gmail.com"
+    "score" : 123
   },
   {
-    "_id": 5,
+    "_id": "5",
     "username": "sammy",
-    "email": "sammy@gmail"
+    "score" : 300
   },
   {
-    "_id": 6,
+    "_id": "6",
     "username": "toby",
-    "email": "toby@gmail.com"
+    "score" : 76
   }
 ]

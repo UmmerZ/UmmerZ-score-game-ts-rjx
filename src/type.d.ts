@@ -1,7 +1,7 @@
 interface IUser {
   _id: string
   username: string
-  score?: number
+  score: number
 }
 interface UserProps {
   user: IUser

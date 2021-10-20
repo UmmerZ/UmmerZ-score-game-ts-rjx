@@ -12,6 +12,7 @@ export const useStyles = makeStyles((theme: Theme) =>
       width: "120px",
       fontSize: 20,
       margin: "10px",
+      borderRadius:"50%"
     },
     total: {
       fontSize: 30,
@@ -21,11 +22,14 @@ export const useStyles = makeStyles((theme: Theme) =>
       width: "320px",
       margin: "10px 10px 100px 10px",
       borderRadius: "5px",
+      color:"#fff"
     },
     button2: {
       marginTop: "10px",
       padding: "7px",
-      marginLeft: "27px",
+      marginLeft: "23px",
+      background: "#2E3030",
+      color:"#fff"
     },
     input: {
       margin: "0 0 50px 10px ",
@@ -38,6 +42,23 @@ export const useStyles = makeStyles((theme: Theme) =>
       padding: "10px",
       borderRadius: "5px",
       width: "380px",
+      color:"#fff"
     },
+    appRoot: {
+      width: "80%",
+      display: "flex",
+      alignItems: "center",
+      margin: "0 auto",
+      justifyContent: "center",
+    },
+    refresh:{
+      position: "fixed",
+      left: theme.spacing(3),
+      top: theme.spacing(3),
+      background: "#2E3030",
+      color:"#fff",
+      padding: theme.spacing(3),
+      fontSize: 20
+    }
   })
 )
